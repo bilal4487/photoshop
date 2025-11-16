@@ -1,6 +1,7 @@
-FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
-RUN apk add --no-cache curl && \
-    curl -L -o photopea.zip https://github.com/photopea/photopea/releases/latest/download/photopea.zip && \
-    unzip photopea.zip && rm photopea.zip
-EXPOSE 80
+FROM node:18-alpine
+WORKDIR /app
+RUN apk add --no-cache git
+RUN git clone https://github.com/photopea/photopea.git .
+RUN npm install
+EXPOSE 3000
+CMD ["npm", "start"]
